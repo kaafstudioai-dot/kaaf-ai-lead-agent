@@ -1,10 +1,22 @@
 # AI Project Assistant: lead qualification agent
 
-An AI agent for business websites that chats with visitors, understands their project, scores the lead, and sends the owner a clear summary. It's built with **Claude by Anthropic** and runs on **Cloudflare Workers**.
+An AI agent for business websites that chats with visitors, understands their project, scores the lead, and sends the owner a clear summary. It's built with **Claude by Anthropic**.
 
-**Live demo:** [kaafstudio.de/demos/ai-agent](https://kaafstudio.de/demos/ai-agent/) · Built by [Kaaf Studio](https://kaafstudio.de)
+**Live demo:** [kaafstudio.de/demos/ai-agent](https://kaafstudio.de/demos/ai-agent/) (also the chat bubble on [kaafstudio.de](https://kaafstudio.de)) · Built by [Kaaf Studio](https://kaafstudio.de)
 
-![The assistant chatting with a visitor and showing a scored lead summary](docs/screenshot.jpg)
+![The live demo page: the lead summary the studio receives](docs/live-demo.jpg)
+
+## Two ways to run it
+
+| | **ElevenLabs version (live on kaafstudio.de)** | **Self-hosted version (Cloudflare Worker)** |
+|---|---|---|
+| Folder | `elevenlabs/` | `worker/` and `demo/` |
+| Where Claude runs | ElevenLabs Agents, with Claude Sonnet 5 as the model | Your own Cloudflare Worker, calling the Anthropic API |
+| What you need | An ElevenLabs account | An Anthropic API key and a Cloudflare account |
+| Chat window | ElevenLabs' ready-made widget (English and German picker, consent terms) | Custom chat page in `demo/` |
+| Lead hand-off | A client tool, `submit_lead`, handled by `elevenlabs/chat.js` in the browser | A `submit_lead` tool, handled in the page after the Worker replies |
+
+Both versions use the same idea: Claude asks questions, calls a `submit_lead` tool with a strict set of fields once the visitor confirms, and the lead is emailed to the owner.
 
 ## What it does
 
@@ -15,7 +27,7 @@ An AI agent for business websites that chats with visitors, understands their pr
 
 Most website visitors leave without getting in touch. An assistant like this starts the conversation for you and hands you leads that are ready for a quote.
 
-## How it works
+## How the self-hosted version works
 
 ```
 Visitor ──▶ Chat page (HTML/CSS/JS) ──▶ Cloudflare Worker ──▶ Claude (Messages API)
@@ -36,11 +48,21 @@ Visitor ──▶ Chat page (HTML/CSS/JS) ──▶ Cloudflare Worker ──▶ 
 
 | Path | What it is |
 |---|---|
-| `worker/worker.js` | Cloudflare Worker: system prompt, tool, validation, call to the Claude API |
-| `demo/index.html`, `demo/agent.css`, `demo/agent.js` | The chat page |
-| `docs/screenshot.jpg` | Screenshot for this README |
+| `elevenlabs/agent-instructions.md` | The live agent's instructions and the `submit_lead` tool definition |
+| `elevenlabs/chat.js` | Receives the `submit_lead` call in the browser, shows the lead card and emails the lead |
+| `elevenlabs/demo-page.html`, `elevenlabs/chat.css` | The live demo page |
+| `worker/worker.js` | Self-hosted version: Cloudflare Worker with system prompt, tool, validation and the Claude API call |
+| `demo/index.html`, `demo/agent.css`, `demo/agent.js` | Self-hosted version: custom chat page |
+| `docs/` | Screenshots for this README |
 
-## Run your own
+## Run the ElevenLabs version
+
+1. In ElevenLabs, create a **text-only** agent, choose Claude Sonnet 5, and paste in the instructions from `elevenlabs/agent-instructions.md`.
+2. Add the `submit_lead` **client tool** described there.
+3. In the agent's **Security** tab, add your website to the allowlist and set a daily conversation limit.
+4. Put the widget on your page with `<elevenlabs-convai agent-id="YOUR_AGENT_ID">` plus ElevenLabs' embed script, and load `elevenlabs/chat.js` after it. Set `WEB3FORMS_KEY` in `chat.js` to your own [Web3Forms](https://web3forms.com) key.
+
+## Run the self-hosted version
 
 1. **Get an API key** at [console.anthropic.com](https://console.anthropic.com) and set a monthly spend limit.
 2. **Create the Worker.** In the Cloudflare dashboard, go to **Workers & Pages → Create → Worker**, paste in `worker/worker.js`, then deploy.
