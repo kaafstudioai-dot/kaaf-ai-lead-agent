@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>AI Project Assistant · Kaaf Studio</title>
+  <meta name="description" content="Try Kaaf Studio's AI project assistant: an AI agent that chats with website visitors, understands their project and sends the business a scored lead summary.">
+  <meta name="theme-color" content="#0F1A36">
+  <meta property="og:title" content="AI Project Assistant · Kaaf Studio">
+  <meta property="og:description" content="An AI agent that turns website visitors into qualified leads. Try it live.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='11' fill='%231E5AA8'/%3E%3Cellipse cx='14' cy='21' rx='6' ry='7.4' fill='%23F2F5FA'/%3E%3Cellipse cx='26' cy='21' rx='6' ry='7.4' fill='%23F2F5FA'/%3E%3Ccircle cx='15' cy='22' r='3.1' fill='%23141D38'/%3E%3Ccircle cx='27' cy='22' r='3.1' fill='%23141D38'/%3E%3Cpath d='M26.5 8.5l6-3' stroke='%23EFA23A' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="agent.css?v=1">
+</head>
+<body>
+  <a class="back-bar" href="https://kaafstudio.de/#work">AI agent demo by Kaaf Studio <b>&larr; Back to Kaaf Studio</b></a>
+
+  <main class="page">
+    <section class="intro" aria-labelledby="intro-title">
+      <p class="eyebrow">AI agent · Live demo</p>
+      <h1 id="intro-title">An AI assistant that turns visitors into <em>qualified leads.</em></h1>
+      <p class="lede">Most website visitors leave without getting in touch. This assistant starts the conversation, asks the right questions, and sends the business a clear summary of every lead.</p>
+
+      <ol class="steps">
+        <li><span>1</span><div><b>Chats with the visitor</b>One friendly question at a time, in their language.</div></li>
+        <li><span>2</span><div><b>Understands the project</b>Needs, goals, features, timeline and budget.</div></li>
+        <li><span>3</span><div><b>Scores and sends the lead</b>Hot, warm or cold, straight to the owner's inbox, after the visitor confirms.</div></li>
+      </ol>
+
+      <p class="built">Built by Kaaf Studio with Claude by Anthropic, running on Cloudflare Workers. The same kind of assistant can answer customers, take bookings or orders for your business.</p>
+    </section>
+
+    <section class="chat" aria-label="Chat with the project assistant">
+      <header class="chat-head">
+        <div class="avatar" aria-hidden="true">
+          <svg viewBox="0 0 120 120" width="40" height="40"><rect width="120" height="120" rx="30" fill="#1E5AA8"/><rect x="34" y="28" width="14" height="64" rx="2" fill="#F2F5FA"/><path d="M47 56 L70 33 L80 43 L57 66 Z" fill="#9EC1EE"/><path d="M55 55 L86 92 L69 92 L47 66 Z" fill="#F2F5FA"/><circle cx="84" cy="33" r="19" fill="#EFA23A"/><text x="84" y="40.5" text-anchor="middle" font-family="sans-serif" font-size="21" font-weight="700" fill="#0F1A36">ai</text></svg>
+        </div>
+        <div class="who">
+          <b>Kaaf Studio assistant</b>
+          <span id="status" class="status">Online</span>
+        </div>
+        <button type="button" class="restart" id="restart">Start over</button>
+      </header>
+
+      <div class="log" id="log" role="log" aria-live="polite" aria-relevant="additions"></div>
+
+      <div class="chips" id="chips">
+        <button type="button">I need a website for my café</button>
+        <button type="button">I want an AI assistant for bookings</button>
+        <button type="button">I'm just exploring prices</button>
+      </div>
+
+      <form class="composer" id="composer" autocomplete="off">
+        <label for="input" class="sr">Your message</label>
+        <textarea id="input" rows="1" maxlength="1500" placeholder="Tell me about your project…"></textarea>
+        <button type="submit" id="send" aria-label="Send message">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </form>
+      <p class="fine">Answers are written by AI (Claude by Anthropic). Nothing is sent to Kaaf Studio until you press <b>Send to Kaaf Studio</b>.</p>
+    </section>
+  </main>
+
+  <script src="agent.js?v=1"></script>
+</body>
+</html>
